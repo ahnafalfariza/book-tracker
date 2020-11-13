@@ -1,6 +1,9 @@
 import { genKeyPairFromSeed } from 'skynet-js'
-import { generateMnemonic } from 'bip39'
+// import { generateMnemonic } from 'bip39'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import './styles/tailwind.css'
+import Home from './pages/home'
+import Register from './pages/register'
 
 function App() {
   // generate new mnemonic with length 256
@@ -13,9 +16,18 @@ function App() {
   console.log(y)
 
   return (
-    <div className="flex items-center justify-center">
-      <div className="text-red-900 text-3xl">HELLO WORLD</div>
-    </div>
+    <Router>
+      <div>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/register" exact>
+            <Register />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 

@@ -4,6 +4,8 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import './styles/tailwind.css'
 import Home from './pages/home'
 import Register from './pages/register'
+import Explore from './pages/explore'
+import Library from './pages/library'
 
 function App() {
   // generate new mnemonic with length 256
@@ -21,6 +23,12 @@ function App() {
         <Switch>
           <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/explore" exact>
+            <Explore />
+          </Route>
+          <Route path="/library" exact>
+            <Library />
           </Route>
           <Route path="/register" exact>
             <Register />

@@ -4,6 +4,8 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Register from './pages/register'
 import useStore from './store'
+import Login from './pages/login'
+
 import { useEffect } from 'react'
 
 function App({ idx, ceramic }) {
@@ -27,6 +29,9 @@ function App({ idx, ceramic }) {
           </Route>
           <Route path="/register" exact>
             <Register />
+          </Route>
+          <Route path="/login" exact>
+            <Login />
           </Route>
         </Switch>
       </div>

@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@ceramicnetwork/ceramic-http-client": "^0.7.2",
+    "@ceramicstudio/idx": "^0.3.0",
+    "@ceramicstudio/idx-web": "^0.2.0",
     "bip39": "^3.0.2",
+    "identity-wallet": "^2.0.0-alpha.19",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "skynet-js": "^2.7.0",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "zustand": "^3.1.4"
   },
   "scripts": {
     "postcss:watch": "postcss src/styles/index.css -o src/styles/tailwind.css --env development -w",
@@ -26,8 +28,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -43,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@ceramicstudio/idx-tools": "^0.3.1",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^8.2.0",
     "tailwindcss": "^1.9.6"

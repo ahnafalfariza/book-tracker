@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Book from '../components/Book'
 
+import Book from '../components/Book'
+import useStore from '../store'
 import { addToLibrary, getLibrary } from '../utils/skynet'
-import { useStore } from '../utils/store'
 
 const Library = () => {
   const { booksData, setBooksData } = useStore((state) => state)

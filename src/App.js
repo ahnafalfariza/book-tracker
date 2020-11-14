@@ -1,21 +1,26 @@
-import { genKeyPairFromSeed } from 'skynet-js'
-// import { generateMnemonic } from 'bip39'
-import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import './styles/tailwind.css'
+
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Register from './pages/register'
 import Explore from './pages/explore'
 import Library from './pages/library'
+import useStore from './store'
+import Login from './pages/login'
 
-function App() {
-  // generate new mnemonic with length 256
-  // const mnemonic = generateMnemonic(256)
-  // console.log(mnemonic)
+import { useEffect } from 'react'
 
-  const mnemonic = `wait eternal sphere excuse lift ozone brother curtain imitate chalk pear sound impulse badge kind vibrant arena regret broken ghost error amazing wild welcome`
+function App({ idx, ceramic }) {
+  const store = useStore()
 
-  const y = genKeyPairFromSeed(mnemonic)
-  console.log(y)
+  useEffect(() => {
+    if (idx && !store.idx) {
+      store.setIdx(idx)
+    }
+    if (idx && !store.ceramic) {
+      store.setCeramic(ceramic)
+    }
+  }, [idx, ceramic, store])
 
   return (
     <Router>
@@ -32,6 +37,9 @@ function App() {
           </Route>
           <Route path="/register" exact>
             <Register />
+          </Route>
+          <Route path="/login" exact>
+            <Login />
           </Route>
         </Switch>
       </div>

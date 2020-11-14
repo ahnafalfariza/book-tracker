@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Modal from '../components/Modal'
+import useStore from '../store'
 import { addToLibrary, getLibrary } from '../utils/skynet'
-import { useStore } from '../utils/store'
 
 const Explore = () => {
   const [searchResult, setSearchResult] = useState(null)

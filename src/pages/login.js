@@ -12,6 +12,10 @@ const Login = () => {
   const [mnemonic, setMnemonic] = useState('')
 
   const _login = async () => {
+    if (mnemonic.split(' ').length !== 24) {
+      alert('Invalid mnemonic')
+      return
+    }
     const { privateKey } = genKeyPairFromSeed(mnemonic)
     const seed = fromString(privateKey, 'base16')
 
@@ -25,7 +29,7 @@ const Login = () => {
     })
 
     const didProvider = wallet.getDidProvider()
-    window.localStorage.setItem('didProvider', JSON.stringify(didProvider))
+    window.localStorage.setItem('mnemonic', mnemonic)
 
     console.log('authenticating...')
     await idx.authenticate({

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-// import Book from '../components/Book'
+import Book from '../components/Book'
 import useStore from '../store'
 import { addToLibrary, getLibrary } from '../utils/skynet'
 
@@ -36,9 +36,7 @@ const Library = () => {
             <div>
               <h1>{res.title}</h1>
               <h1>{res.libraryType}</h1>
-              <select
-                onChange={(event) => onChangeStatus(index, event.target.value)}
-              >
+              <select onChange={(event) => onChangeStatus(index, event.target.value)}>
                 <option disabled selected value>
                   {'  -- select an option --  '}
                 </option>
@@ -48,7 +46,7 @@ const Library = () => {
               </select>
             </div>
           ))}
-          {/* <Book /> */}
+          <Book />
         </div>
       </div>
     </div>

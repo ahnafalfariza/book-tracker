@@ -13,9 +13,7 @@ import { useEffect } from 'react'
 import { genKeyPairFromSeed } from 'skynet-js'
 // import fromString from 'uint8arrays/from-string'
 // import IdentityWallet from 'identity-wallet'
-import EditProfile from './pages/EditProfile'
 import Nav from './components/Nav'
-import PrivateRoute from './components/PrivateRoute'
 
 function App({ _idx, _ceramic }) {
   const {

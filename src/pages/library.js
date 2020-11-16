@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
-import Book from '../components/Book'
+// import Book from '../components/Book'
 import useStore from '../store'
 import { addToLibrary, getLibrary } from '../utils/skynet'
 
@@ -48,7 +48,7 @@ const Library = () => {
               </select>
             </div>
           ))}
-          <Book />
+          {/* <Book /> */}
         </div>
       </div>
     </div>

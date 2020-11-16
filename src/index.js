@@ -10,7 +10,7 @@ const idxWrapper = new IDXWrapper()
 idxWrapper.init().then(() => {
   ReactDOM.render(
     <React.StrictMode>
-      <App idx={idxWrapper.idx} ceramic={idxWrapper.ceramic} />
+      <App _idx={idxWrapper.idx} _ceramic={idxWrapper.ceramic} />
     </React.StrictMode>,
     document.getElementById('root')
   )

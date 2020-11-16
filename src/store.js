@@ -5,6 +5,10 @@ const useStore = create((set, get) => ({
   setIdx: (idx) => set(() => ({ idx: idx })),
   ceramic: null,
   setCeramic: (ceramic) => set(() => ({ ceramic: ceramic })),
+  userData: {},
+  setUserData: (userData) => set(() => ({ userData: userData })),
+  userId: null,
+  setUserId: (userId) => set(() => ({ userId: userId })),
 }))
 
 export default useStore

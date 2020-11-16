@@ -6,7 +6,7 @@ import { parseImgUrl } from '../utils/common.js'
 import { genKeyPairFromSeed } from 'skynet-js'
 
 const EditProfile = () => {
-  const { idx, userId } = useStore()
+  const { idx, userId, userData, setUserData } = useStore()
   const [fullname, setFullname] = useState('')
   const [bio, setBio] = useState('')
   const [avatar, setAvatar] = useState('')
@@ -16,18 +16,16 @@ const EditProfile = () => {
 
   useEffect(() => {
     const _getUserData = async () => {
-      console.log(userId)
-      const userData = await idx.get('user')
       console.log(userData)
       setFullname(userData.fullname || '')
       setBio(userData.bio || '')
       setAvatar(userData.avatar || '')
       setPublicKey(userData.publicKey || '')
     }
-    if (idx && userId) {
+    if (userId && userData) {
       _getUserData()
     }
-  }, [idx, userId])
+  }, [userId, userData])
 
   const _submit = async () => {
     console.log('authenticated!')
@@ -55,6 +53,7 @@ const EditProfile = () => {
       console.log('set data!')
       await idx.set('user', params)
       console.log('saved!')
+      setUserData(params)
     } catch (err) {
       console.log(err)
     }
@@ -73,7 +72,7 @@ const EditProfile = () => {
         <ImgCrop
           input={imgFile}
           size={{
-            size: 512,
+            width: 512,
             height: 512,
           }}
           type="circle"
@@ -82,7 +81,6 @@ const EditProfile = () => {
             setShowImgCrop(false)
           }}
           right={(res) => {
-            console.log(res)
             setShowImgCrop(false)
             setImgFile(res.payload.imgFile)
             setAvatar(res.payload.imgUrl)
@@ -94,7 +92,13 @@ const EditProfile = () => {
       </div>
       <div>
         <img src={parseImgUrl(avatar)} alt="" />
-        <input type="file" onChange={(e) => _setImg(e)} />
+        <input
+          onClick={(e) => {
+            e.target.value = null
+          }}
+          type="file"
+          onChange={(e) => _setImg(e)}
+        />
         <input
           type="text"
           value={fullname}

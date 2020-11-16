@@ -44,7 +44,7 @@ const ImgCrop = ({
       })
       setFirstLoad(false)
     }
-  }, [imgUrl, size.width, size.height, type])
+  }, [imgUrl, size, type])
 
   const _right = async (e) => {
     e.preventDefault()

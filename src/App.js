@@ -12,9 +12,17 @@ import { genKeyPairFromSeed } from 'skynet-js'
 import fromString from 'uint8arrays/from-string'
 import IdentityWallet from 'identity-wallet'
 import EditProfile from './pages/EditProfile'
+import Nav from './components/Nav'
 
 function App({ _idx, _ceramic }) {
-  const { idx, setIdx, ceramic, setCeramic, setUserId } = useStore()
+  const {
+    idx,
+    setIdx,
+    ceramic,
+    setCeramic,
+    setUserId,
+    setUserData,
+  } = useStore()
 
   useEffect(() => {
     if (_idx && !idx) {
@@ -28,7 +36,9 @@ function App({ _idx, _ceramic }) {
   useEffect(() => {
     const _authUser = async () => {
       const mnemonic = window.localStorage.getItem('mnemonic')
+      console.log(mnemonic)
       const { privateKey } = genKeyPairFromSeed(mnemonic)
+      console.log(privateKey)
       const seed = fromString(privateKey, 'base16')
 
       console.log('create new wallet')
@@ -45,17 +55,21 @@ function App({ _idx, _ceramic }) {
         authProvider: wallet.getDidProvider(),
       })
       console.log('authenticated!')
+      const userData = await idx.get('user')
+      console.log(userData)
+      setUserData(userData)
       setUserId(idx.id)
     }
 
     if (idx) {
       _authUser()
     }
-  }, [ceramic, idx, setUserId])
+  }, [ceramic, idx, setUserId, setUserData])
 
   return (
     <Router>
       <div>
+        <Nav />
         <Switch>
           <Route path="/" exact>
             <Home />

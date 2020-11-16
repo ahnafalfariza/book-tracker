@@ -197,7 +197,7 @@ const Library = () => {
                     <div>
                       <h4 className="text-lg font-semibold mt-4">Description</h4>
                       <p className="mt-1 opacity-75 whitespace-pre-line text-sm">
-                        {booksData[activeBookIdx].description || 'No description available.'}
+                        {booksData[activeBookIdx].description?.replaceAll('.', '.\n\n') || 'No description available.'}
                       </p>
                       <hr className="mt-2 border-white opacity-50" />
                       <div className="mt-2 flex justify-between">

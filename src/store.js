@@ -9,6 +9,8 @@ const useStore = create((set, get) => ({
   setUserData: (userData) => set(() => ({ userData: userData })),
   userId: null,
   setUserId: (userId) => set(() => ({ userId: userId })),
+  booksData: [],
+  setBooksData: (data) => set((state) => ({ booksData: data })),
 }))
 
 export default useStore

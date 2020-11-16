@@ -3,3 +3,12 @@
 @tailwind components;
 
 @tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+input,
+textarea {
+  @apply bg-gray-800 outline-none rounded-md p-2 w-full;
+}

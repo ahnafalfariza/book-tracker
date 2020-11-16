@@ -9,8 +9,8 @@ import Login from './pages/login'
 
 import { useEffect } from 'react'
 import { genKeyPairFromSeed } from 'skynet-js'
-import fromString from 'uint8arrays/from-string'
-import IdentityWallet from 'identity-wallet'
+// import fromString from 'uint8arrays/from-string'
+// import IdentityWallet from 'identity-wallet'
 import EditProfile from './pages/EditProfile'
 import Nav from './components/Nav'
 
@@ -39,26 +39,31 @@ function App({ _idx, _ceramic }) {
       console.log(mnemonic)
       const { privateKey } = genKeyPairFromSeed(mnemonic)
       console.log(privateKey)
-      const seed = fromString(privateKey, 'base16')
 
-      console.log('create new wallet')
-      const wallet = await IdentityWallet.create({
-        ceramic: ceramic,
-        seed: seed,
-        getPermission() {
-          return Promise.resolve([])
-        },
-      })
+      // development only
+      setUserId(privateKey)
 
-      console.log('authenticating...')
-      await idx.authenticate({
-        authProvider: wallet.getDidProvider(),
-      })
-      console.log('authenticated!')
-      const userData = await idx.get('user')
-      console.log(userData)
-      setUserData(userData)
-      setUserId(idx.id)
+      // ceramic is slow
+      // const seed = fromString(privateKey, 'base16')
+
+      // console.log('create new wallet')
+      // const wallet = await IdentityWallet.create({
+      //   ceramic: ceramic,
+      //   seed: seed,
+      //   getPermission() {
+      //     return Promise.resolve([])
+      //   },
+      // })
+
+      // console.log('authenticating...')
+      // await idx.authenticate({
+      //   authProvider: wallet.getDidProvider(),
+      // })
+      // console.log('authenticated!')
+      // const userData = await idx.get('user')
+      // console.log(userData)
+      // setUserData(userData)
+      // setUserId(idx.id)
     }
 
     if (idx) {
@@ -70,20 +75,22 @@ function App({ _idx, _ceramic }) {
     <Router>
       <div>
         <Nav />
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/me/edit" exact>
-            <EditProfile />
-          </Route>
-        </Switch>
+        <div className="max-w-5xl m-auto">
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/register" exact>
+              <Register />
+            </Route>
+            <Route path="/login" exact>
+              <Login />
+            </Route>
+            <Route path="/me/edit" exact>
+              <EditProfile />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </Router>
   )

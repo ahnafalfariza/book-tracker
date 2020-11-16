@@ -13,6 +13,7 @@ import { genKeyPairFromSeed } from 'skynet-js'
 // import IdentityWallet from 'identity-wallet'
 import EditProfile from './pages/EditProfile'
 import Nav from './components/Nav'
+import PrivateRoute from './components/PrivateRoute'
 
 function App({ _idx, _ceramic }) {
   const {
@@ -37,10 +38,13 @@ function App({ _idx, _ceramic }) {
     const _authUser = async () => {
       const mnemonic = window.localStorage.getItem('mnemonic')
       console.log(mnemonic)
+      if (!mnemonic) {
+        return
+      }
       const { privateKey } = genKeyPairFromSeed(mnemonic)
       console.log(privateKey)
 
-      // development only
+      // // development only
       setUserId(privateKey)
 
       // ceramic is slow
@@ -61,8 +65,11 @@ function App({ _idx, _ceramic }) {
       // })
       // console.log('authenticated!')
       // const userData = await idx.get('user')
-      // console.log(userData)
-      // setUserData(userData)
+      // if (userData) {
+      //   setUserData(userData)
+      //   console.log(userData)
+      // }
+      // console.log(idx.id)
       // setUserId(idx.id)
     }
 
@@ -86,9 +93,11 @@ function App({ _idx, _ceramic }) {
             <Route path="/login" exact>
               <Login />
             </Route>
-            <Route path="/me/edit" exact>
-              <EditProfile />
-            </Route>
+            <PrivateRoute
+              path="/me/edit"
+              exact
+              component={EditProfile}
+            ></PrivateRoute>
           </Switch>
         </div>
       </div>

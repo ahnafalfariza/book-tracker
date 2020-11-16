@@ -19125,6 +19125,7 @@ body {
   --text-opacity: 1;
   color: #f7fafc;
   color: rgba(247, 250, 252, var(--text-opacity));
+  min-height: 100vh;
 }
 
 input,

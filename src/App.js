@@ -5,7 +5,6 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Register from './pages/register'
 import Explore from './pages/explore'
-import Library from './pages/library'
 import useStore from './store'
 import Login from './pages/login'
 
@@ -17,14 +16,7 @@ import Nav from './components/Nav'
 import { getProfile } from './utils/skynet'
 
 function App({ _idx, _ceramic }) {
-  const {
-    idx,
-    setIdx,
-    ceramic,
-    setCeramic,
-    setUserId,
-    setUserData,
-  } = useStore()
+  const { idx, setIdx, ceramic, setCeramic, setUserId, setUserData } = useStore()
 
   useEffect(() => {
     if (_idx && !idx) {
@@ -94,9 +86,6 @@ function App({ _idx, _ceramic }) {
             </Route>
             <Route path="/explore" exact>
               <Explore />
-            </Route>
-            <Route path="/library" exact>
-              <Library />
             </Route>
             <Route path="/register" exact>
               <Register />

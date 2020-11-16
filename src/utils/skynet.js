@@ -52,3 +52,11 @@ export const upload = async (file) => {
     console.log(error)
   }
 }
+
+export const resetData = async () => {
+  try {
+    await client.db.setJSON(privateKey, dataKey, [])
+  } catch (error) {
+    console.log(error)
+  }
+}

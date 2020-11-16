@@ -48,7 +48,25 @@ const Nav = () => {
           <div className="mx-auto max-w-md">
             <div className="bg-dark-primary-800 rounded-md shadow-md p-4 relative">
               <div className="absolute right-0 top-0 px-4 py-2">
-                <div onClick={(_) => setShowModal(null)}>X</div>
+                <div
+                  className="bg-dark-primary-500 rounded-full p-2 shadow-lg cursor-pointer"
+                  onClick={(_) => setShowModal(null)}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M16.0002 18.8285L7.41436 27.4142L4.58594 24.5858L13.1717 16L4.58594 7.41424L7.41436 4.58582L16.0002 13.1716L24.5859 4.58582L27.4144 7.41424L18.8286 16L27.4144 24.5858L24.5859 27.4142L16.0002 18.8285Z"
+                      fill="white"
+                    />
+                  </svg>
+                </div>
               </div>
               <EditProfile afterSubmit={(_) => setShowModal(null)} />
             </div>
@@ -66,7 +84,7 @@ const Nav = () => {
               <div className="relative">
                 <div
                   onClick={(_) => setShowUserModal(true)}
-                  className="w-8 h-8 overflow-hidden rounded-full"
+                  className="w-8 h-8 overflow-hidden rounded-full cursor-pointer"
                 >
                   <img
                     className="object-cover"
@@ -86,10 +104,10 @@ const Nav = () => {
                           setShowModal('editProfile')
                         }}
                       >
-                        <p className="py-1">Edit Profile</p>
+                        <p className="py-1 cursor-pointer">Edit Profile</p>
                       </div>
                       <div onClick={_logout}>
-                        <p className="py-1">Logout</p>
+                        <p className="py-1 cursor-pointer">Logout</p>
                       </div>
                     </div>
                   </div>

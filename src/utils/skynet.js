@@ -24,6 +24,24 @@ export const getLibrary = async () => {
   }
 }
 
+const profileDataKey = 'skybook::profile'
+export const saveProfile = async (data, callback = () => {}) => {
+  try {
+    await client.db.setJSON(privateKey, profileDataKey, data)
+    callback()
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const getProfile = async () => {
+  try {
+    const { data } = await client.db.getJSON(publicKey, profileDataKey)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const upload = async (file) => {
   try {
     const res = await client.uploadFile(file)

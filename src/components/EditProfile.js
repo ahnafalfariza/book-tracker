@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ImgCrop from './ImgCrop'
 import useStore from '../store'
-import { upload } from '../utils/skynet'
+import { saveProfile, upload } from '../utils/skynet'
 import { parseImgUrl } from '../utils/common.js'
 import { genKeyPairFromSeed } from 'skynet-js'
 
 const EditProfile = ({ afterSubmit = () => {} }) => {
-  const { idx, userId, userData, setUserData } = useStore()
+  const { userId, userData, setUserData } = useStore()
   const [fullname, setFullname] = useState('')
   const [bio, setBio] = useState('')
   const [avatar, setAvatar] = useState('')
@@ -48,9 +48,10 @@ const EditProfile = ({ afterSubmit = () => {} }) => {
     }
 
     try {
-      console.log('set data!')
-      await idx.set('user', params)
-      console.log('saved!')
+      await saveProfile(params)
+      // console.log('set data!')
+      // await idx.set('user', params)
+      // console.log('saved!')
       setUserData(params)
       afterSubmit()
     } catch (err) {

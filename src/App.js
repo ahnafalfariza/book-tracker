@@ -14,6 +14,7 @@ import { genKeyPairFromSeed } from 'skynet-js'
 // import fromString from 'uint8arrays/from-string'
 // import IdentityWallet from 'identity-wallet'
 import Nav from './components/Nav'
+import { getProfile } from './utils/skynet'
 
 function App({ _idx, _ceramic }) {
   const {
@@ -45,6 +46,10 @@ function App({ _idx, _ceramic }) {
       console.log(privateKey)
 
       // // development only
+      const profile = await getProfile()
+      if (profile) {
+        setUserData(profile)
+      }
       setUserId(privateKey)
 
       // ceramic is slow

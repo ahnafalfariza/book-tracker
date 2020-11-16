@@ -40,11 +40,7 @@ const Nav = () => {
   return (
     <nav>
       {showModal === 'editProfile' && (
-        <Modal
-          close={(_) => setShowModal(null)}
-          closeOnBgClick={false}
-          closeOnEscape={false}
-        >
+        <Modal close={(_) => setShowModal(null)} closeOnBgClick={false} closeOnEscape={false}>
           <div className="mx-auto max-w-md">
             <div className="bg-dark-primary-800 rounded-md shadow-md p-4 relative">
               <div className="absolute right-0 top-0 px-4 py-2">
@@ -52,13 +48,7 @@ const Nav = () => {
                   className="bg-dark-primary-700 hover:bg-dark-primary-600 transition-all duration-100 rounded-full p-2 shadow-lg cursor-pointer"
                   onClick={(_) => setShowModal(null)}
                 >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       fill-rule="evenodd"
                       clip-rule="evenodd"
@@ -96,13 +86,7 @@ const Nav = () => {
                   <div className="px-2 truncate w-24 overflow-hidden">
                     <p className="font-medium">{userData.fullname}</p>
                   </div>
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       fill-rule="evenodd"
                       clip-rule="evenodd"
@@ -127,10 +111,7 @@ const Nav = () => {
                       >
                         <p className="font-medium">Edit Profile</p>
                       </div>
-                      <div
-                        onClick={_logout}
-                        className="py-2 px-2 cursor-pointer rounded-md hover:bg-dark-primary-500"
-                      >
+                      <div onClick={_logout} className="py-2 px-2 cursor-pointer rounded-md hover:bg-dark-primary-500">
                         <p className="font-medium">Logout</p>
                       </div>
                     </div>
@@ -145,31 +126,17 @@ const Nav = () => {
         {userId && (
           <div className="max-w-md mx-auto mt-8 w-full flex items-center justify-between">
             <div>
-              <NavLink
-                className="text-gray-300 opacity-50"
-                activeClassName="opacity-100"
-                to="/"
-                exact
-              >
+              <NavLink className="text-gray-300 opacity-50" activeClassName="opacity-100" to="/library" exact>
                 Library
               </NavLink>
             </div>
             <div>
-              <NavLink
-                className="text-gray-300 opacity-50"
-                activeClassName="opacity-100"
-                to="/explore"
-                exact
-              >
+              <NavLink className="text-gray-300 opacity-50" activeClassName="opacity-100" to="/explore" exact>
                 Explore
               </NavLink>
             </div>
             <div>
-              <NavLink
-                className="text-gray-300 opacity-50"
-                activeClassName="opacity-100"
-                to={`/${userId}`}
-              >
+              <NavLink className="text-gray-300 opacity-50" activeClassName="opacity-100" to={`/${userId}`}>
                 Profile
               </NavLink>
             </div>

@@ -14,6 +14,7 @@ import { genKeyPairFromSeed } from 'skynet-js'
 // import IdentityWallet from 'identity-wallet'
 import Nav from './components/Nav'
 import { getProfile } from './utils/skynet'
+import Library from './pages/library'
 
 function App({ _idx, _ceramic }) {
   const { idx, setIdx, ceramic, setCeramic, setUserId, setUserData } = useStore()
@@ -83,6 +84,9 @@ function App({ _idx, _ceramic }) {
           <Switch>
             <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/library" exact>
+              <Library />
             </Route>
             <Route path="/explore" exact>
               <Explore />

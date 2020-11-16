@@ -4,7 +4,6 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/home'
 import Register from './pages/register'
 import Explore from './pages/explore'
-import Library from './pages/library'
 import useStore from './store'
 import Login from './pages/login'
 
@@ -31,9 +30,6 @@ function App({ idx, ceramic }) {
           </Route>
           <Route path="/explore" exact>
             <Explore />
-          </Route>
-          <Route path="/library" exact>
-            <Library />
           </Route>
           <Route path="/register" exact>
             <Register />

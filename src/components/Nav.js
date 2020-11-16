@@ -49,7 +49,7 @@ const Nav = () => {
             <div className="bg-dark-primary-800 rounded-md shadow-md p-4 relative">
               <div className="absolute right-0 top-0 px-4 py-2">
                 <div
-                  className="bg-dark-primary-500 rounded-full p-2 shadow-lg cursor-pointer"
+                  className="bg-dark-primary-700 hover:bg-dark-primary-600 transition-all duration-100 rounded-full p-2 shadow-lg cursor-pointer"
                   onClick={(_) => setShowModal(null)}
                 >
                   <svg
@@ -84,30 +84,54 @@ const Nav = () => {
               <div className="relative">
                 <div
                   onClick={(_) => setShowUserModal(true)}
-                  className="w-8 h-8 overflow-hidden rounded-full cursor-pointer"
+                  className="flex items-center cursor-pointer bg-dark-primary-800 hover:bg-dark-primary-700 rounded-md border-dark-primary-600 border p-2 select-none transition-all duration-100 ease-in"
                 >
-                  <img
-                    className="object-cover"
-                    alt={`${userData.fullname}'s avatar`}
-                    src={parseImgUrl(userData.avatar)}
-                  />
+                  <div className="w-6 h-6 overflow-hidden rounded-full">
+                    <img
+                      className="object-cover"
+                      alt={`${userData.fullname}'s avatar`}
+                      src={parseImgUrl(userData.avatar)}
+                    />
+                  </div>
+                  <div className="px-2 truncate w-24 overflow-hidden">
+                    <p className="font-medium">{userData.fullname}</p>
+                  </div>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M19.293 7.29291L20.7072 8.70712L12.0001 17.4142L3.29297 8.70712L4.70718 7.29291L12.0001 14.5858L19.293 7.29291Z"
+                      fill="white"
+                    />
+                  </svg>
                 </div>
+
                 {showUserModal && (
                   <div
                     ref={navRef}
-                    className="absolute z-10 w-40 right-0 bg-dark-primary-600 p-2 rounded-md shadow-md"
+                    className="absolute z-10 w-40 right-0 bg-dark-primary-600 rounded-md shadow-md mt-2 p-2"
                   >
-                    <div>
+                    <div className="relative z-0">
                       <div
                         onClick={(_) => {
                           setShowUserModal(false)
                           setShowModal('editProfile')
                         }}
+                        className="py-2 px-2 cursor-pointer rounded-md hover:bg-dark-primary-500"
                       >
-                        <p className="py-1 cursor-pointer">Edit Profile</p>
+                        <p className="font-medium">Edit Profile</p>
                       </div>
-                      <div onClick={_logout}>
-                        <p className="py-1 cursor-pointer">Logout</p>
+                      <div
+                        onClick={_logout}
+                        className="py-2 px-2 cursor-pointer rounded-md hover:bg-dark-primary-500"
+                      >
+                        <p className="font-medium">Logout</p>
                       </div>
                     </div>
                   </div>

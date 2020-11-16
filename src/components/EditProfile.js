@@ -91,7 +91,7 @@ const EditProfile = ({ afterSubmit = () => {} }) => {
         <div className="text-white-100 font-bold text-3xl">Edit Profile</div>
       </div>
       <div>
-        <div className="mx-auto mt-8 w-32 h-32 overflow-hidden rounded-full relative border bg-dark-primary-600">
+        <div className="mx-auto mt-8 w-32 h-32 overflow-hidden rounded-full relative border border-dark-primary-500 bg-dark-primary-600">
           <img src={parseImgUrl(avatar)} alt="" />
           <input
             className="absolute inset-0 opacity-0"

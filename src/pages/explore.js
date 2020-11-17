@@ -6,6 +6,7 @@ import { addToLibrary, getLibrary } from '../utils/skynet'
 import ChooseLibraryModal from '../components/ChooseLibraryModal'
 import BookModal from '../components/BookModal'
 import ManualAddModal from '../components/ManualAddModal'
+import ScanBarcodeModal from '../components/ScanBarcodeModal'
 
 const Explore = () => {
   const [searchResult, setSearchResult] = useState(null)
@@ -19,8 +20,7 @@ const Explore = () => {
     getLibrary().then((res) => setBooksData(res))
   }, [setBooksData])
 
-  const onSearch = (event) => {
-    const query = event.target.value
+  const onSearch = (query) => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&langRestrict=en&maxResults=20`)
       .then((res) => res.json())
       .then((data) => setSearchResult(data.items))
@@ -58,28 +58,33 @@ const Explore = () => {
   }
 
   const addBook = async (libraryType = 'readingList', book = detailBook, convert = true) => {
-    const newData = booksData
-    const newBook = convert
-      ? {
-          ...convertMetaData(book),
-          libraryType: libraryType,
-        }
-      : {
-          ...book,
-          libraryType: libraryType,
-        }
+    let newData = booksData
+    let newBook = convert ? convertMetaData(book) : book
+    newBook = { ...newBook, libraryType: libraryType }
 
-    newData.push(newBook)
+    if (isBookInLibrary(book.id)) {
+      const index = newData.findIndex((x) => x.id === book.id)
+      newData[index].libraryType = libraryType
+    } else {
+      newData.push(newBook)
+    }
+
     setIsLoading(true)
     await addToLibrary(newData)
     setBooksData(newData)
     setIsLoading(false)
+    onCloseModal()
 
     console.log(await getLibrary())
   }
 
-  const checkIfBookInLibrary = (id) => {
+  const isBookInLibrary = (id) => {
     return booksData.some((bookData) => bookData.id === id)
+  }
+
+  const onFinishScanBarcode = (isbn) => {
+    onSearch(isbn)
+    onCloseModal()
   }
 
   return (
@@ -96,9 +101,14 @@ const Explore = () => {
         </div>
         <div className="w-full md:w-4/5">
           <form>
-            <input type="text" onChange={onSearch} className="border-2 border-black mb-3" />
+            <input
+              type="text"
+              onChange={(event) => onSearch(event.target.value)}
+              className="border-2 border-black mb-3"
+            />
           </form>
           <button onClick={() => setshowModal('manualAdd')}>Manual add</button>
+          <button onClick={() => setshowModal('scan')}>Scan barcode</button>
           {searchResult &&
             searchResult.map((result) => (
               <div key={result.id} className="flex flex-col justify-between my-4">
@@ -113,7 +123,7 @@ const Explore = () => {
                 {result.volumeInfo.authors && <h1>by. {result.volumeInfo.authors.join(',')}</h1>}
                 <div>
                   <button onClick={() => onPressAdd(result)}>
-                    {checkIfBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                    {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
                   </button>
                 </div>
               </div>
@@ -128,10 +138,17 @@ const Explore = () => {
               onPress={addBook}
             />
           )}
-          {showModal === 'detail' && <BookModal bookData={convertMetaData(detailBook)} onClose={onCloseModal} />}
+          {showModal === 'detail' && (
+            <BookModal
+              bookData={convertMetaData(detailBook)}
+              onClose={onCloseModal}
+              onPressAdd={() => onPressAdd(detailBook)}
+            />
+          )}
           {showModal === 'manualAdd' && (
             <ManualAddModal onClose={onCloseModal} onPressAdd={addBook} isLoading={isLoading} />
           )}
+          {showModal === 'scan' && <ScanBarcodeModal onClose={onCloseModal} onFinish={onFinishScanBarcode} />}
         </div>
       </div>
     </div>

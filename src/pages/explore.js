@@ -73,6 +73,7 @@ const Explore = () => {
     await addToLibrary(newData)
     setBooksData(newData)
     setIsLoading(false)
+    onCloseModal()
 
     console.log(await getLibrary())
   }

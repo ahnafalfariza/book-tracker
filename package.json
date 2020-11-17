@@ -14,6 +14,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^17.0.1",
     "react-hook-form": "^6.11.2",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "skynet-js": "^2.7.0",

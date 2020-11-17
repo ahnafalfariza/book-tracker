@@ -58,18 +58,17 @@ const Explore = () => {
   }
 
   const addBook = async (libraryType = 'readingList', book = detailBook, convert = true) => {
-    const newData = booksData
-    const newBook = convert
-      ? {
-          ...convertMetaData(book),
-          libraryType: libraryType,
-        }
-      : {
-          ...book,
-          libraryType: libraryType,
-        }
+    let newData = booksData
+    let newBook = convert ? convertMetaData(book) : book
+    newBook = { ...newBook, libraryType: libraryType }
 
-    newData.push(newBook)
+    if (isBookInLibrary(book.id)) {
+      const index = newData.findIndex((x) => x.id === book.id)
+      newData[index].libraryType = libraryType
+    } else {
+      newData.push(newBook)
+    }
+
     setIsLoading(true)
     await addToLibrary(newData)
     setBooksData(newData)
@@ -78,7 +77,7 @@ const Explore = () => {
     console.log(await getLibrary())
   }
 
-  const checkIfBookInLibrary = (id) => {
+  const isBookInLibrary = (id) => {
     return booksData.some((bookData) => bookData.id === id)
   }
 
@@ -113,7 +112,7 @@ const Explore = () => {
                 {result.volumeInfo.authors && <h1>by. {result.volumeInfo.authors.join(',')}</h1>}
                 <div>
                   <button onClick={() => onPressAdd(result)}>
-                    {checkIfBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                    {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
                   </button>
                 </div>
               </div>

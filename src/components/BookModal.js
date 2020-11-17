@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from './Modal'
 
-const BookModal = ({ bookData, onClose }) => {
+const BookModal = ({ bookData, onClose, onPressAdd }) => {
   console.log(bookData)
   return (
     <Modal close={onClose}>
@@ -16,6 +16,9 @@ const BookModal = ({ bookData, onClose }) => {
         <h1>{bookData.description}</h1>
         <h1>{bookData.pageCount}</h1>
         <h1>{bookData.categories}</h1>
+        <div>
+          <button onClick={onPressAdd}>{'Add to Library'}</button>
+        </div>
       </div>
     </Modal>
   )

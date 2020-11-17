@@ -138,7 +138,13 @@ const Explore = () => {
               onPress={addBook}
             />
           )}
-          {showModal === 'detail' && <BookModal bookData={convertMetaData(detailBook)} onClose={onCloseModal} />}
+          {showModal === 'detail' && (
+            <BookModal
+              bookData={convertMetaData(detailBook)}
+              onClose={onCloseModal}
+              onPressAdd={() => onPressAdd(detailBook)}
+            />
+          )}
           {showModal === 'manualAdd' && (
             <ManualAddModal onClose={onCloseModal} onPressAdd={addBook} isLoading={isLoading} />
           )}

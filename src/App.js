@@ -15,6 +15,7 @@ import { genKeyPairFromSeed } from 'skynet-js'
 import Nav from './components/Nav'
 import { getProfile } from './utils/skynet'
 import Library from './pages/library'
+import Profile from './pages/profile'
 
 function App({ _idx, _ceramic }) {
   const { idx, setIdx, ceramic, setCeramic, setUserId, setUserData } = useStore()
@@ -35,7 +36,7 @@ function App({ _idx, _ceramic }) {
       if (!mnemonic) {
         return
       }
-      const { privateKey } = genKeyPairFromSeed(mnemonic)
+      const { privateKey, publicKey } = genKeyPairFromSeed(mnemonic)
       console.log(privateKey)
 
       // // development only
@@ -43,7 +44,7 @@ function App({ _idx, _ceramic }) {
       if (profile) {
         setUserData(profile)
       }
-      setUserId(privateKey)
+      setUserId(publicKey)
 
       // ceramic is slow
       // const seed = fromString(privateKey, 'base16')
@@ -96,6 +97,9 @@ function App({ _idx, _ceramic }) {
             </Route>
             <Route path="/login" exact>
               <Login />
+            </Route>
+            <Route path="/:userId">
+              <Profile />
             </Route>
           </Switch>
         </div>

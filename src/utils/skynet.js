@@ -15,9 +15,9 @@ export const addToLibrary = async (data, callback = () => {}) => {
   }
 }
 
-export const getLibrary = async () => {
+export const getLibrary = async (_publicKey) => {
   try {
-    const { data } = await client.db.getJSON(publicKey, dataKey)
+    const { data } = await client.db.getJSON(_publicKey || publicKey, dataKey)
     return data
   } catch (error) {
     console.log(error)
@@ -33,9 +33,9 @@ export const saveProfile = async (data, callback = () => {}) => {
     console.log(error)
   }
 }
-export const getProfile = async () => {
+export const getProfile = async (_publicKey) => {
   try {
-    const { data } = await client.db.getJSON(publicKey, profileDataKey)
+    const { data } = await client.db.getJSON(_publicKey || publicKey, profileDataKey)
     return data
   } catch (error) {
     console.log(error)

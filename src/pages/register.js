@@ -23,6 +23,7 @@ const Register = () => {
       const profile = {
         fullname: fullname,
         bio: `${quote.body} \n\n-${quote.author}`,
+        avatar: `sia://AAB_vubGbjoI_CvFCNhcXnFkjjDvTu3gF4wiKXRMILfTNQ`,
       }
       await saveProfile(profile)
       window.localStorage.setItem('mnemonic', mnemonic)

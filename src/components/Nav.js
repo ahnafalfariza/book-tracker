@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { parseImgUrl } from '../utils/common'
 import useStore from '../store'
 import Modal from './Modal'
@@ -96,8 +96,8 @@ const Nav = () => {
                       src={parseImgUrl(userData.avatar)}
                     />
                   </div>
-                  <div className="px-2 truncate w-24 overflow-hidden">
-                    <p className="font-medium">{userData.fullname}</p>
+                  <div className="px-2 truncate w-24">
+                    <p className="font-medium truncate">{userData.fullname}</p>
                   </div>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -132,7 +132,9 @@ const Nav = () => {
                 )}
               </div>
             ) : (
-              <div>Login</div>
+              <div>
+                <Link to="/login">Login</Link>
+              </div>
             )}
           </div>
         </div>

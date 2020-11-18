@@ -285,7 +285,7 @@ const Library = () => {
           .filter((book) => (bookFilter === 'all' ? true : bookFilter === book.libraryType))
           .map((res, idx) => (
             <div key={idx} className="w-1/2 md:w-1/4 p-4">
-              <Book idx={idx} book={res} onClick={_setActiveBook} />
+              <Book idx={idx} book={res} onClick={(_) => _setActiveBook(res.id)} />
             </div>
           ))}
       </div>

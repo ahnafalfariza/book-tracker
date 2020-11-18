@@ -50,7 +50,7 @@ import React from 'react'
 
 const Book = ({ book, onClick }) => {
   return (
-    <div onClick={(_) => onClick(book.id)}>
+    <div onClick={(_) => onClick()}>
       <div
         className="book relative rounded-lg overflow-hidden cursor-pointer"
         style={{

@@ -110,7 +110,7 @@ const Register = () => {
             <input placeholder="Fullname" type="text" value={fullname} onChange={(e) => setFullname(e.target.value)} />
           </div>
           <button
-            className="mt-8 w-full p-2 text-gray-100 font-medium bg-dark-primary-100 rounded-md"
+            className="mt-20 w-full p-2 text-gray-100 font-medium bg-dark-primary-100 rounded-md"
             disabled={fullname.length === 0}
             onClick={(_) => setShowModal('mnemonic')}
           >

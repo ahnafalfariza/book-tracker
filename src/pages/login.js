@@ -1,65 +1,57 @@
 import React, { useState } from 'react'
-import { genKeyPairFromSeed } from 'skynet-js'
 import useStore from '../store'
-import IdentityWallet from 'identity-wallet'
-import fromString from 'uint8arrays/from-string'
 import { useHistory } from 'react-router-dom'
+import { getProfile, login } from '../utils/skynet'
 
 const Login = () => {
   const history = useHistory()
 
-  const { idx, ceramic } = useStore()
+  const { setUserId, setUserData } = useStore()
   const [mnemonic, setMnemonic] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const _login = async () => {
+    setIsSubmitting(true)
     if (mnemonic.split(' ').length !== 24) {
       alert('Invalid mnemonic')
       return
     }
-    const { privateKey } = genKeyPairFromSeed(mnemonic)
-    const seed = fromString(privateKey, 'base16')
+    const { publicKey } = await login(mnemonic)
 
-    console.log('create new wallet')
-    const wallet = await IdentityWallet.create({
-      ceramic: ceramic,
-      seed: seed,
-      getPermission() {
-        return Promise.resolve([])
-      },
-    })
+    const profile = await getProfile(publicKey)
+    setUserData(profile)
 
-    const didProvider = wallet.getDidProvider()
     window.localStorage.setItem('mnemonic', mnemonic)
 
-    console.log('authenticating...')
-    await idx.authenticate({
-      authProvider: didProvider,
-    })
-
-    console.log('authenticated!')
     try {
-      console.log('get data!')
-      const userData = await idx.get('user')
-      console.log(userData)
-      history.push('/')
+      getProfile(publicKey)
+      setUserId(publicKey)
+      history.push('/explore')
     } catch (err) {
       console.log(err)
     }
+    setIsSubmitting(false)
   }
 
   return (
-    <div>
+    <div className="max-w-md mx-auto p-4">
       <div className="flex items-center justify-center">
-        <div className="text-red-900 text-3xl">Login</div>
+        <div className="font-bold text-3xl">Login</div>
       </div>
-      <div>
-        <input
+      <div className="mt-4">
+        <textarea
+          className="resize-none h-24"
           type="text"
+          placeholder="Seed phrase"
           value={mnemonic}
           onChange={(e) => setMnemonic(e.target.value)}
         />
-        <button disabled={mnemonic.length === 0} onClick={_login}>
-          Login
+        <button
+          className="mt-4 w-full p-2 text-gray-100 font-medium bg-dark-primary-100 rounded-md"
+          disabled={mnemonic.length === 0 || isSubmitting}
+          onClick={_login}
+        >
+          {isSubmitting ? 'Logging in...' : 'Login'}
         </button>
       </div>
     </div>

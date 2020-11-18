@@ -9,11 +9,11 @@ import useStore from './store'
 import Login from './pages/login'
 
 import { useEffect } from 'react'
-import { genKeyPairFromSeed } from 'skynet-js'
+// import { genKeyPairFromSeed } from 'skynet-js'
 // import fromString from 'uint8arrays/from-string'
 // import IdentityWallet from 'identity-wallet'
 import Nav from './components/Nav'
-import { getProfile } from './utils/skynet'
+import { getProfile, login } from './utils/skynet'
 import Library from './pages/library'
 import Profile from './pages/profile'
 
@@ -32,19 +32,23 @@ function App({ _idx, _ceramic }) {
   useEffect(() => {
     const _authUser = async () => {
       const mnemonic = window.localStorage.getItem('mnemonic')
-      console.log(mnemonic)
       if (!mnemonic) {
         return
       }
-      const { privateKey, publicKey } = genKeyPairFromSeed(mnemonic)
-      console.log(privateKey)
+
+      const { publicKey } = await login(mnemonic)
+
+      setUserId(publicKey)
 
       // // development only
-      const profile = await getProfile()
-      if (profile) {
-        setUserData(profile)
+      try {
+        const profile = await getProfile()
+        if (profile) {
+          setUserData(profile)
+        }
+      } catch (err) {
+        console.log(err)
       }
-      setUserId(publicKey)
 
       // ceramic is slow
       // const seed = fromString(privateKey, 'base16')

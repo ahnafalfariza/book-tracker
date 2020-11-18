@@ -14,11 +14,17 @@ const Explore = () => {
   const [detailBook, setDetailBook] = useState(null)
 
   const [isLoading, setIsLoading] = useState(false)
-  const { booksData, setBooksData } = useStore((state) => state)
+  const { userId, booksData, setBooksData } = useStore((state) => state)
 
   useEffect(() => {
-    getLibrary().then((res) => setBooksData(res))
-  }, [setBooksData])
+    if (userId) {
+      getLibrary().then((res) => {
+        if (res) {
+          setBooksData(res)
+        }
+      })
+    }
+  }, [setBooksData, userId])
 
   const onSearch = (query) => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&langRestrict=en&maxResults=20`)
@@ -79,6 +85,7 @@ const Explore = () => {
   }
 
   const isBookInLibrary = (id) => {
+    console.log(booksData)
     return booksData.some((bookData) => bookData.id === id)
   }
 

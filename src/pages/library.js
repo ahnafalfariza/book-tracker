@@ -79,7 +79,7 @@ const Library = () => {
                       }}
                     >
                       <img
-                        className="w-full absolute"
+                        className="w-full h-full absolute object-cover"
                         src={booksData[activeBookIdx].imageLinks.thumbnail}
                         alt={booksData[activeBookIdx].title}
                       />

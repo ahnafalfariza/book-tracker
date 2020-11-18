@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Book from '../components/Book'
 import { parseImgUrl } from '../utils/common'
 import { getLibrary, getProfile } from '../utils/skynet'
 
@@ -74,12 +75,8 @@ const Profile = () => {
               <div className="flex flex-wrap -mx-4">
                 {userReadingList.map((book, idx) => {
                   return (
-                    <div className="w-full md:w-1/3 px-4">
-                      <img
-                        className="w-full rounded-md overflow-hidden"
-                        src={parseImgUrl(book.imageLinks.thumbnail)}
-                        alt=""
-                      />
+                    <div key={book.id} className="w-1/2 md:w-1/3 px-4">
+                      <Book book={book} onClick={(_) => {}} />
                     </div>
                   )
                 })}
@@ -89,12 +86,8 @@ const Profile = () => {
               <div className="flex flex-wrap -mx-4">
                 {userReadingNow.map((book, idx) => {
                   return (
-                    <div className="w-full md:w-1/3 px-4">
-                      <img
-                        className="w-full rounded-md overflow-hidden"
-                        src={parseImgUrl(book.imageLinks.thumbnail)}
-                        alt=""
-                      />
+                    <div key={book.id} className="w-1/2 md:w-1/3 px-4">
+                      <Book book={book} onClick={(_) => {}} />
                     </div>
                   )
                 })}
@@ -102,14 +95,10 @@ const Profile = () => {
             )}
             {activeTab === 'finished' && (
               <div className="flex flex-wrap -mx-4">
-                {userFinished.map((book, idx) => {
+                {userFinished.map((book) => {
                   return (
-                    <div className="w-full md:w-1/3 px-4">
-                      <img
-                        className="w-full rounded-md overflow-hidden"
-                        src={parseImgUrl(book.imageLinks.thumbnail)}
-                        alt=""
-                      />
+                    <div key={book.id} className="w-1/2 md:w-1/3 px-4">
+                      <Book book={book} onClick={(_) => {}} />
                     </div>
                   )
                 })}

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import useStore from '../store'
 import { Link, useHistory } from 'react-router-dom'
 import { getProfile, login } from '../utils/skynet'
+import Modal from '../components/Modal'
 
 const Login = () => {
   const history = useHistory()
@@ -9,32 +10,55 @@ const Login = () => {
   const { setUserId, setUserData } = useStore()
   const [mnemonic, setMnemonic] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showModal, setShowModal] = useState(null)
 
   const _login = async () => {
     setIsSubmitting(true)
-    if (mnemonic.split(' ').length !== 24) {
-      alert('Invalid mnemonic')
+
+    if (mnemonic.trim().split(' ').length !== 24) {
+      setShowModal('invalidMnemonic')
+      setIsSubmitting(false)
+
       return
     }
-    const { publicKey } = await login(mnemonic)
 
-    const profile = await getProfile(publicKey)
-    setUserData(profile)
-
-    window.localStorage.setItem('mnemonic', mnemonic)
+    const { publicKey } = await login(mnemonic.trim())
 
     try {
-      getProfile(publicKey)
+      const profile = await getProfile(publicKey)
+
+      setUserData(profile)
+    } catch (err) {
+      setShowModal('accountNotExist')
+      setIsSubmitting(false)
+
+      return
+    }
+
+    try {
+      window.localStorage.setItem('mnemonic', mnemonic)
+
       setUserId(publicKey)
       history.push('/explore')
     } catch (err) {
       console.log(err)
     }
+
     setIsSubmitting(false)
   }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-16">
+      {showModal && (
+        <Modal close={(_) => setShowModal(null)}>
+          <div className="mx-auto max-w-md">
+            <div className="w-full relative bg-red-800 rounded-md shadow-md overflow-hidden p-4">
+              <p className="text-red-200 font-medium">{showModal === 'accountNotExist' && 'Account not exist'}</p>
+              <p className="text-red-200 font-medium">{showModal === 'invalidMnemonic' && 'Invalid seed phrase'}</p>
+            </div>
+          </div>
+        </Modal>
+      )}
       <div className="flex items-center flex-wrap">
         <div className="w-full md:w-3/5 relative">
           <div

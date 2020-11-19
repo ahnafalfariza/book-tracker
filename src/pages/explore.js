@@ -7,24 +7,44 @@ import ChooseLibraryModal from '../components/ChooseLibraryModal'
 import BookModal from '../components/BookModal'
 import ManualAddModal from '../components/ManualAddModal'
 import ScanBarcodeModal from '../components/ScanBarcodeModal'
+import { convertMetaDataGoogle, convertMetaDataNYT } from '../utils/common'
 
 const Explore = () => {
   const [searchResult, setSearchResult] = useState(null)
   const [showModal, setshowModal] = useState(false)
   const [detailBook, setDetailBook] = useState(null)
+  const [recommendations, setRecommendations] = useState(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const { booksData, setBooksData } = useStore((state) => state)
 
   useEffect(() => {
-    getLibrary().then((res) => setBooksData(res))
+    getLibrary().then((res) => {
+      if (res) {
+        setBooksData(res)
+        console.log(res)
+      }
+    })
+    getRecommendations()
   }, [setBooksData])
 
   const onSearch = (query) => {
-    fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&langRestrict=en&maxResults=20`)
+    if (query !== '') {
+      fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&langRestrict=en&maxResults=20`)
+        .then((res) => res.json())
+        .then((data) => setSearchResult(data.items.map((item) => convertMetaDataGoogle(item))))
+        .catch((err) => console.log(err))
+    } else {
+      setSearchResult(null)
+    }
+  }
+
+  const getRecommendations = () => {
+    fetch(
+      'https://api.nytimes.com/svc/books/v3/lists/current/e-book-fiction.json?api-key=RjYkR7egFmmMAxpAh2jTTpWPZLSXocJ6'
+    )
       .then((res) => res.json())
-      .then((data) => setSearchResult(data.items))
-      .catch((err) => console.log(err))
+      .then((res) => setRecommendations(res.results.books.map((item) => convertMetaDataNYT(item))))
   }
 
   const onPressAdd = (bookData) => {
@@ -42,25 +62,9 @@ const Explore = () => {
     setDetailBook(null)
   }
 
-  const convertMetaData = (bookData) => {
-    return {
-      id: bookData.id,
-      title: bookData.volumeInfo.title,
-      authors: bookData.volumeInfo.authors,
-      publisher: bookData.volumeInfo.publisher,
-      publishedDate: bookData.volumeInfo.publishedDate,
-      isbn: bookData.volumeInfo.industryIdentifiers,
-      description: bookData.volumeInfo.description,
-      pageCount: bookData.volumeInfo.pageCount,
-      categories: bookData.volumeInfo.categories,
-      imageLinks: bookData.volumeInfo.imageLinks,
-    }
-  }
-
-  const addBook = async (libraryType = 'readingList', book = detailBook, convert = true) => {
+  const addBook = async (libraryType = 'readingList', book = detailBook) => {
     let newData = booksData
-    let newBook = convert ? convertMetaData(book) : book
-    newBook = { ...newBook, libraryType: libraryType }
+    let newBook = { ...book, libraryType: libraryType }
 
     if (isBookInLibrary(book.id)) {
       const index = newData.findIndex((x) => x.id === book.id)
@@ -109,41 +113,56 @@ const Explore = () => {
           </form>
           <button onClick={() => setshowModal('manualAdd')}>Manual add</button>
           <button onClick={() => setshowModal('scan')}>Scan barcode</button>
-          {searchResult &&
-            searchResult.map((result) => (
-              <div key={result.id} className="flex flex-col justify-between my-4">
-                <div>
-                  <button onClick={() => onPressBook(result)}>
-                    {result.volumeInfo.imageLinks && (
-                      <img src={result.volumeInfo.imageLinks.thumbnail} alt="Book Cover" />
-                    )}
-                    {result.volumeInfo.title}
-                  </button>
+          {searchResult
+            ? searchResult.map((result) => (
+                <div key={result.id} className="flex flex-col justify-between my-4">
+                  <div>
+                    <button onClick={() => onPressBook(result)}>
+                      {result.imageLinks && <img src={result.imageLinks.thumbnail} alt="Book Cover" />}
+                      {result.title}
+                    </button>
+                  </div>
+                  {result.authors && <h1>by. {result.authors.join(',')}</h1>}
+                  <div>
+                    <button onClick={() => onPressAdd(result)}>
+                      {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                    </button>
+                  </div>
                 </div>
-                {result.volumeInfo.authors && <h1>by. {result.volumeInfo.authors.join(',')}</h1>}
+              ))
+            : recommendations && (
                 <div>
-                  <button onClick={() => onPressAdd(result)}>
-                    {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
-                  </button>
+                  <div>recom</div>
+                  {recommendations.map((result) => (
+                    <div key={result.id} className="flex flex-col justify-between my-4">
+                      <div>
+                        <button onClick={() => onPressBook(result)}>
+                          {result.imageLinks && <img src={result.imageLinks.thumbnail} alt="Book Cover" />}
+                          {result.title}
+                        </button>
+                      </div>
+                      {result.authors && <h1>by. {result.authors.join(',')}</h1>}
+                      <div>
+                        <button onClick={() => onPressAdd(result)}>
+                          {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))}
+              )}
           {showModal === 'add' && (
             <ChooseLibraryModal
               isLoading={isLoading}
               onClose={onCloseModal}
-              bookTitle={detailBook.volumeInfo.title}
-              authors={detailBook.volumeInfo.authors}
+              bookTitle={detailBook.title}
+              authors={detailBook.authors}
               header={'Add Book'}
               onPress={addBook}
             />
           )}
           {showModal === 'detail' && (
-            <BookModal
-              bookData={convertMetaData(detailBook)}
-              onClose={onCloseModal}
-              onPressAdd={() => onPressAdd(detailBook)}
-            />
+            <BookModal bookData={detailBook} onClose={onCloseModal} onPressAdd={() => onPressAdd(detailBook)} />
           )}
           {showModal === 'manualAdd' && (
             <ManualAddModal onClose={onCloseModal} onPressAdd={addBook} isLoading={isLoading} />

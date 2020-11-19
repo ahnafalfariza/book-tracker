@@ -9,7 +9,7 @@ const ManualAddModal = ({ onClose, onPressAdd, isLoading }) => {
     data.authors = [data.authors]
     data.id = Date.now()
     console.log(data)
-    onPressAdd('readingList', data, false)
+    onPressAdd('readingList', data)
   }
 
   return (

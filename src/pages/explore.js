@@ -13,7 +13,8 @@ const Explore = () => {
   const [searchResult, setSearchResult] = useState(null)
   const [showModal, setshowModal] = useState(false)
   const [detailBook, setDetailBook] = useState(null)
-  const [recommendations, setRecommendations] = useState(null)
+  const [fictionRecom, setFictionRecom] = useState(null)
+  const [nonFictionRecom, setNonFictionRecom] = useState(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const { userId, booksData, setBooksData } = useStore((state) => state)
@@ -25,7 +26,8 @@ const Explore = () => {
           setBooksData(res)
         }
       })
-      getRecommendations()
+      getFictionRecomm()
+      getNonFictionRecomm()
     }
   }, [setBooksData, userId])
 
@@ -40,12 +42,20 @@ const Explore = () => {
     }
   }
 
-  const getRecommendations = () => {
+  const getFictionRecomm = () => {
     fetch(
       'https://api.nytimes.com/svc/books/v3/lists/current/e-book-fiction.json?api-key=RjYkR7egFmmMAxpAh2jTTpWPZLSXocJ6'
     )
       .then((res) => res.json())
-      .then((res) => setRecommendations(res.results.books.map((item) => convertMetaDataNYT(item))))
+      .then((res) => setFictionRecom(res.results.books.map((item) => convertMetaDataNYT(item))))
+  }
+
+  const getNonFictionRecomm = () => {
+    fetch(
+      'https://api.nytimes.com/svc/books/v3/lists/current/e-book-nonfiction.json?api-key=RjYkR7egFmmMAxpAh2jTTpWPZLSXocJ6'
+    )
+      .then((res) => res.json())
+      .then((res) => setNonFictionRecom(res.results.books.map((item) => convertMetaDataNYT(item))))
   }
 
   const onPressAdd = (bookData) => {
@@ -84,7 +94,6 @@ const Explore = () => {
   }
 
   const isBookInLibrary = (id) => {
-    console.log(booksData)
     return booksData.some((bookData) => bookData.id === id)
   }
 
@@ -115,27 +124,29 @@ const Explore = () => {
           </form>
           <button onClick={() => setshowModal('manualAdd')}>Manual add</button>
           <button onClick={() => setshowModal('scan')}>Scan barcode</button>
-          {searchResult
-            ? searchResult.map((result) => (
-                <div key={result.id} className="flex flex-col justify-between my-4">
-                  <div>
-                    <button onClick={() => onPressBook(result)}>
-                      {result.imageLinks && <img src={result.imageLinks.thumbnail} alt="Book Cover" />}
-                      {result.title}
-                    </button>
-                  </div>
-                  {result.authors && <h1>by. {result.authors.join(',')}</h1>}
-                  <div>
-                    <button onClick={() => onPressAdd(result)}>
-                      {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
-                    </button>
-                  </div>
-                </div>
-              ))
-            : recommendations && (
+          {searchResult ? (
+            searchResult.map((result) => (
+              <div key={result.id} className="flex flex-col justify-between my-4">
                 <div>
-                  <div>recom</div>
-                  {recommendations.map((result) => (
+                  <button onClick={() => onPressBook(result)}>
+                    {result.imageLinks && <img src={result.imageLinks.thumbnail} alt="Book Cover" />}
+                    {result.title}
+                  </button>
+                </div>
+                {result.authors && <h1>by. {result.authors.join(',')}</h1>}
+                <div>
+                  <button onClick={() => onPressAdd(result)}>
+                    {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div>
+              {fictionRecom && (
+                <div>
+                  <div>fiction recom</div>
+                  {fictionRecom.map((result) => (
                     <div key={result.id} className="flex flex-col justify-between my-4">
                       <div>
                         <button onClick={() => onPressBook(result)}>
@@ -153,6 +164,29 @@ const Explore = () => {
                   ))}
                 </div>
               )}
+              {nonFictionRecom && (
+                <div>
+                  <div>non fiction recom</div>
+                  {nonFictionRecom.map((result) => (
+                    <div key={result.id} className="flex flex-col justify-between my-4">
+                      <div>
+                        <button onClick={() => onPressBook(result)}>
+                          {result.imageLinks && <img src={result.imageLinks.thumbnail} alt="Book Cover" />}
+                          {result.title}
+                        </button>
+                      </div>
+                      {result.authors && <h1>by. {result.authors.join(',')}</h1>}
+                      <div>
+                        <button onClick={() => onPressAdd(result)}>
+                          {isBookInLibrary(result.id) ? 'Added' : 'Add to Library'}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
           {showModal === 'add' && (
             <ChooseLibraryModal
               isLoading={isLoading}

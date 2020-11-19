@@ -25,6 +25,7 @@ const Explore = () => {
           setBooksData(res)
         }
       })
+      getRecommendations()
     }
   }, [setBooksData, userId])
 

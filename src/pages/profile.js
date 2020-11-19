@@ -82,7 +82,7 @@ const Profile = () => {
                       }}
                     >
                       <img
-                        className="w-full absolute"
+                        className="w-full h-full absolute object-cover"
                         src={bookList[activeBookIdx].imageLinks.thumbnail}
                         alt={bookList[activeBookIdx].title}
                       />

@@ -1,10 +1,16 @@
 import { SkynetClient, genKeyPairFromSeed } from 'skynet-js'
 
 const client = new SkynetClient('https://siasky.net/')
-const mnemonic =
-  'wait eternal sphere excuse lift ozone brother curtain imitate chalk pear sound impulse badge kind vibrant arena regret broken ghost error amazing wild welcome'
-const { privateKey, publicKey } = genKeyPairFromSeed(mnemonic)
+let privateKey,
+  publicKey = ''
 const dataKey = 'skybook::library'
+
+export const login = async (_mnemonic) => {
+  const keyPair = genKeyPairFromSeed(_mnemonic)
+  privateKey = keyPair.privateKey
+  publicKey = keyPair.publicKey
+  return keyPair
+}
 
 export const addToLibrary = async (data, callback = () => {}) => {
   try {
@@ -12,6 +18,7 @@ export const addToLibrary = async (data, callback = () => {}) => {
     callback()
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
@@ -21,6 +28,7 @@ export const getLibrary = async (_publicKey) => {
     return data
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
@@ -31,6 +39,7 @@ export const saveProfile = async (data, callback = () => {}) => {
     callback()
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 export const getProfile = async (_publicKey) => {
@@ -39,6 +48,7 @@ export const getProfile = async (_publicKey) => {
     return data
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
@@ -50,6 +60,7 @@ export const upload = async (file) => {
     return protocol + link
   } catch (error) {
     console.log(error)
+    throw error
   }
 }
 
@@ -58,5 +69,6 @@ export const resetData = async () => {
     await client.db.setJSON(privateKey, dataKey, [])
   } catch (error) {
     console.log(error)
+    throw error
   }
 }

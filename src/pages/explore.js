@@ -16,17 +16,17 @@ const Explore = () => {
   const [recommendations, setRecommendations] = useState(null)
 
   const [isLoading, setIsLoading] = useState(false)
-  const { booksData, setBooksData } = useStore((state) => state)
+  const { userId, booksData, setBooksData } = useStore((state) => state)
 
   useEffect(() => {
-    getLibrary().then((res) => {
-      if (res) {
-        setBooksData(res)
-        console.log(res)
-      }
-    })
-    getRecommendations()
-  }, [setBooksData])
+    if (userId) {
+      getLibrary().then((res) => {
+        if (res) {
+          setBooksData(res)
+        }
+      })
+    }
+  }, [setBooksData, userId])
 
   const onSearch = (query) => {
     if (query !== '') {
@@ -83,6 +83,7 @@ const Explore = () => {
   }
 
   const isBookInLibrary = (id) => {
+    console.log(booksData)
     return booksData.some((bookData) => bookData.id === id)
   }
 

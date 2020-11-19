@@ -16,6 +16,10 @@ textarea {
   @apply bg-dark-primary-800 outline-none rounded-md p-2 w-full;
 }
 
+button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
 .book {
 }
 

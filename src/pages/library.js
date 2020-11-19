@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 import Book from '../components/Book'
 
 const Library = () => {
-  const { booksData, setBooksData } = useStore((state) => state)
+  const { booksData, setBooksData, userId } = useStore((state) => state)
   const [showModal, setShowModal] = useState(null)
   const [activeBookId, setActiveBookId] = useState()
   const [activeTab, setActiveTab] = useState('readingStatus')
@@ -17,12 +17,14 @@ const Library = () => {
   const [bookFilter, setBookFilter] = useState('all')
 
   useEffect(() => {
-    getLibrary().then((res) => {
-      if (res) {
-        setBooksData(res)
-      }
-    })
-  }, [setBooksData])
+    if (userId) {
+      getLibrary().then((res) => {
+        if (res) {
+          setBooksData(res)
+        }
+      })
+    }
+  }, [setBooksData, userId])
 
   const onChangeStatus = async (value) => {
     setReadingStatusLoader(value)
@@ -77,7 +79,7 @@ const Library = () => {
                       }}
                     >
                       <img
-                        className="w-full absolute"
+                        className="w-full h-full absolute object-cover"
                         src={booksData[activeBookIdx].imageLinks.thumbnail}
                         alt={booksData[activeBookIdx].title}
                       />

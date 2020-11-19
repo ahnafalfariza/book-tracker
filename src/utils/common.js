@@ -25,7 +25,7 @@ export const parseImgUrl = (url) => {
 
 export const convertMetaDataGoogle = (bookData) => {
   let highResImage = bookData.volumeInfo.imageLinks
-  highResImage.thumbnail = highResImage.thumbnail.replace('zoom=1', 'zoom=0')
+  highResImage.thumbnail = highResImage.thumbnail.replace('zoom=3', 'zoom=0')
 
   return {
     id: bookData.id,

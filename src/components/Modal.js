@@ -1,12 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-const Modal = ({
-  close = () => {},
-  closeOnBgClick = true,
-  closeOnEscape = true,
-  children,
-  style = {},
-}) => {
+const Modal = ({ close = () => {}, closeOnBgClick = true, closeOnEscape = true, children, style = {} }) => {
   const modalRef = useRef(null)
 
   useEffect(() => {
@@ -34,7 +28,7 @@ const Modal = ({
     <div
       ref={modalRef}
       onClick={(e) => _bgClick(e)}
-      className="fixed inset-0 z-50 flex items-center p-4"
+      className="fixed inset-0 z-50 flex items-center"
       style={{
         backgroundColor: `rgba(0,0,0,0.86)`,
         ...style,

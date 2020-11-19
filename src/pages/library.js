@@ -36,6 +36,19 @@ const Library = () => {
     setReadingStatusLoader(null)
   }
 
+  const onDeleteBook = async () => {
+    setReadingStatusLoader('delete')
+
+    const newData = booksData.map((a) => ({ ...a }))
+    const idx = _getActiveBookIdx(activeBookId)
+    newData.splice(idx, 1)
+    await addToLibrary(newData)
+
+    setReadingStatusLoader(null)
+    setShowModal(null)
+    setBooksData(newData)
+  }
+
   const _setActiveBook = (id) => {
     setActiveBookId(id)
     setShowModal('activeBook')
@@ -212,6 +225,37 @@ const Library = () => {
                               <p className="ml-4 text-xl">Finished</p>
                             </div>
                             {readingStatusLoader === 'finished' && (
+                              <div className="w-8">
+                                <ReactLoading color={'white'} height="100%" width="100%" />
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div className="align-baseline absolute w-full my-1">
+                          <div
+                            onClick={(_) => onDeleteBook()}
+                            className="flex justify-between cursor-pointer px-2 py-2 rounded-md hover:bg-dark-primary-900"
+                          >
+                            <div className={'flex items-center opacity-100'}>
+                              {/* <div className="rounded-full w-8 h-8 flex items-center justify-center">
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 32 32"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M16.0002 18.8285L7.41436 27.4142L4.58594 24.5858L13.1717 16L4.58594 7.41424L7.41436 4.58582L16.0002 13.1716L24.5859 4.58582L27.4144 7.41424L18.8286 16L27.4144 24.5858L24.5859 27.4142L16.0002 18.8285Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div> */}
+                              <p className="ml-4 text-xl">Delete</p>
+                            </div>
+                            {readingStatusLoader === 'delete' && (
                               <div className="w-8">
                                 <ReactLoading color={'white'} height="100%" width="100%" />
                               </div>

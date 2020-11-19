@@ -257,7 +257,9 @@ const Nav = () => {
               </div>
             ) : (
               <div>
-                <Link to="/login">Login</Link>
+                <Link to="/login">
+                  <p className="font-medium text-lg">Login</p>
+                </Link>
               </div>
             )}
           </div>

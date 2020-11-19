@@ -16,6 +16,7 @@ import Nav from './components/Nav'
 import { getProfile, login } from './utils/skynet'
 import Library from './pages/library'
 import Profile from './pages/profile'
+import Footer from './components/Footer'
 
 function App({ _idx, _ceramic }) {
   const { idx, setIdx, ceramic, setCeramic, setUserId, setUserData } = useStore()
@@ -84,8 +85,8 @@ function App({ _idx, _ceramic }) {
   return (
     <Router>
       <div>
-        <Nav />
         <div className="max-w-5xl m-auto">
+          <Nav />
           <Switch>
             <Route path="/" exact>
               <Home />
@@ -107,6 +108,7 @@ function App({ _idx, _ceramic }) {
             </Route>
           </Switch>
         </div>
+        <Footer />
       </div>
     </Router>
   )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserBarcodeReader } from '@zxing/library'
+import { BrowserMultiFormatReader } from '@zxing/library'
 
 import Modal from './Modal'
 
@@ -8,14 +8,14 @@ const ScanBarcodeModal = ({ onFinish, onClose }) => {
   const [listInputDevice, setListInputDevice] = useState([])
 
   useEffect(() => {
-    const codeReader = new BrowserBarcodeReader()
-    codeReader.getVideoInputDevices().then((videoInputDevices) => {
-      console.log(videoInputDevices)
+    const codeReader = new BrowserMultiFormatReader()
+    codeReader.listVideoInputDevices().then((videoInputDevices) => {
       setListInputDevice(videoInputDevices)
       codeReader
         .decodeOnceFromVideoDevice(selectedDeviceId, 'video')
         .then((result) => {
           console.log(result)
+          console.assert(result)
           onFinish(result.text)
         })
         .catch((err) => {

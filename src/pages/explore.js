@@ -86,11 +86,9 @@ const Explore = () => {
           setBooksData(res)
         }
       })
-      const rndIdx = Math.floor(Math.random() * recomList.length)
-      getBookRecomm(recomList[rndIdx])
-      // getFictionRecomm()
-      // getNonFictionRecomm()
     }
+    const rndIdx = Math.floor(Math.random() * recomList.length)
+    getBookRecomm(recomList[rndIdx])
   }, [setBooksData, userId])
 
   const onSearch = (query) => {

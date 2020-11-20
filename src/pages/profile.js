@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Book from '../components/Book'
 import BookModal from '../components/BookModal'
+import useStore from '../store'
 import { parseImgUrl } from '../utils/common'
 import { getLibrary, getProfile } from '../utils/skynet'
 
 const Profile = () => {
   const { userId } = useParams()
   const [userData, setUserData] = useState({})
+  const { setBooksData } = useStore((state) => state)
   const [activeTab, setActiveTab] = useState('readingList')
   const [userReadingList, setUserReadingList] = useState([])
   const [userReadingNow, setUserReadingNow] = useState([])
@@ -23,6 +25,7 @@ const Profile = () => {
       }
       const library = await getLibrary(userId)
       if (library) {
+        setBooksData(library)
         const readingList = library.filter((book) => book.libraryType === 'readingList')
         setUserReadingList(readingList)
         const readingNow = library.filter((book) => book.libraryType === 'readingNow')
@@ -34,7 +37,7 @@ const Profile = () => {
     if (userId) {
       _getData()
     }
-  }, [userId])
+  }, [userId, setBooksData])
 
   const onPressBook = (bookData) => {
     setShowModal('detail')

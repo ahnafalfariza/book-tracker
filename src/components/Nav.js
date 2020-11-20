@@ -204,7 +204,6 @@ const Nav = () => {
                 </div>
               </div>
             )}
-            {/* <input placeholder="Search book title" /> */}
           </div>
           <div className="w-1/2 md:w-1/4 flex justify-end">
             {userId ? (

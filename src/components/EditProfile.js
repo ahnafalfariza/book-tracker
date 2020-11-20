@@ -51,9 +51,6 @@ const EditProfile = ({ afterSubmit = () => {} }) => {
 
     try {
       await saveProfile(params)
-      // console.log('set data!')
-      // await idx.set('user', params)
-      // console.log('saved!')
       setUserData(params)
       afterSubmit()
     } catch (err) {

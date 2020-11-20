@@ -1,34 +1,23 @@
 import './styles/tailwind.css'
 import 'croppie/croppie.css'
 
+import React, { useEffect } from 'react'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
+
+import { getProfile, login } from './utils/skynet'
 import Home from './pages/home'
 import Register from './pages/register'
 import Explore from './pages/explore'
 import useStore from './store'
 import Login from './pages/login'
-
-import { useEffect } from 'react'
-// import { genKeyPairFromSeed } from 'skynet-js'
-// import fromString from 'uint8arrays/from-string'
-// import IdentityWallet from 'identity-wallet'
-import Nav from './components/Nav'
-import { getProfile, login } from './utils/skynet'
 import Library from './pages/library'
 import Profile from './pages/profile'
+
+import Nav from './components/Nav'
 import Footer from './components/Footer'
 
-function App({ _idx, _ceramic }) {
-  const { idx, setIdx, ceramic, setCeramic, setUserId, setUserData } = useStore()
-
-  useEffect(() => {
-    if (_idx && !idx) {
-      setIdx(_idx)
-    }
-    if (_ceramic && !ceramic) {
-      setCeramic(_ceramic)
-    }
-  }, [_idx, _ceramic, idx, ceramic, setIdx, setCeramic])
+function App() {
+  const { setUserId, setUserData } = useStore()
 
   useEffect(() => {
     const _authUser = async () => {
@@ -50,37 +39,9 @@ function App({ _idx, _ceramic }) {
       } catch (err) {
         console.log(err)
       }
-
-      // ceramic is slow
-      // const seed = fromString(privateKey, 'base16')
-
-      // console.log('create new wallet')
-      // const wallet = await IdentityWallet.create({
-      //   ceramic: ceramic,
-      //   seed: seed,
-      //   getPermission() {
-      //     return Promise.resolve([])
-      //   },
-      // })
-
-      // console.log('authenticating...')
-      // await idx.authenticate({
-      //   authProvider: wallet.getDidProvider(),
-      // })
-      // console.log('authenticated!')
-      // const userData = await idx.get('user')
-      // if (userData) {
-      //   setUserData(userData)
-      //   console.log(userData)
-      // }
-      // console.log(idx.id)
-      // setUserId(idx.id)
     }
-
-    if (idx) {
-      _authUser()
-    }
-  }, [ceramic, idx, setUserId, setUserData])
+    _authUser()
+  }, [setUserId, setUserData])
 
   return (
     <Router>

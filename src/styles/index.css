@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+body {
+  @apply bg-dark-primary-900 text-gray-100 min-h-screen;
+  font-family: 'Syne', sans-serif;
+}
+
+input,
+textarea {
+  @apply bg-dark-primary-800 outline-none rounded-md p-2 w-full;
+}
+
+button:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.book {
+}
+
+.book .info {
+  @apply hidden;
+}
+
+.book:hover .info {
+  @apply block;
+}

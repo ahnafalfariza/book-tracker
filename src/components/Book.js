@@ -9,7 +9,9 @@ const Book = ({ book, onClick }) => {
           paddingBottom: `153%`,
         }}
       >
-        <img className="w-full h-full absolute object-cover" src={book.imageLinks.thumbnail} alt={book.title} />
+        {book.imageLinks && (
+          <img className="w-full h-full absolute object-cover" src={book.imageLinks.thumbnail} alt={book.title} />
+        )}
         <div
           className="info absolute inset-0"
           style={{

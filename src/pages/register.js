@@ -5,6 +5,7 @@ import { login, saveProfile } from '../utils/skynet'
 import randomQuotes from 'random-quotes'
 import { Link, useHistory } from 'react-router-dom'
 import Modal from '../components/Modal'
+import LibraryImg from '../assets/library.jpg'
 
 const mnemonic = generateMnemonic(256)
 
@@ -84,7 +85,7 @@ const Register = () => {
           </div>
         </Modal>
       )}
-      <div className="flex items-center flex-wrap">
+      <div className="flex items-center flex-wra">
         <div className="w-full md:w-3/5 relative">
           <div
             className="w-full "
@@ -94,7 +95,7 @@ const Register = () => {
           >
             <img
               className="bg-dark-primary-300 absolute w-full h-full object-cover rounded-lg overflow-hidden"
-              src="/library.jpg"
+              src={LibraryImg}
               alt="SkyBook Hero"
             />
           </div>

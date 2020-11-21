@@ -1,4 +1,5 @@
 import React from 'react'
+import Hero from '../assets/hero.png'
 
 const Home = () => {
   return (
@@ -10,7 +11,7 @@ const Home = () => {
       <div className="mt-8">
         <img
           className="shadow-inner border-2 border-dark-primary-400 rounded-md w-full"
-          src="/hero.png"
+          src={Hero}
           alt="Skybook hero"
         />
       </div>

@@ -2,6 +2,7 @@
   "name": "book-tracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@zxing/library": "^0.18.3",
     "bip39": "^3.0.2",

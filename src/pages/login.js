@@ -3,6 +3,7 @@ import useStore from '../store'
 import { Link, useHistory } from 'react-router-dom'
 import { getProfile, login } from '../utils/skynet'
 import Modal from '../components/Modal'
+import LibraryImg from '../assets/library.jpg'
 
 const Login = () => {
   const history = useHistory()
@@ -69,7 +70,7 @@ const Login = () => {
           >
             <img
               className="bg-dark-primary-300 absolute w-full h-full object-cover rounded-lg overflow-hidden"
-              src="/library.jpg"
+              src={LibraryImg}
               alt="SkyBook Hero"
             />
           </div>

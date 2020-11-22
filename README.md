@@ -13,9 +13,9 @@ Well designed and responsive. We build you a book tracker that you can access ev
 
 Easily share your reading profile with the world, embed your Skybook profile to your website or social media to let others know what you've been reading.
 
-Try this application [here](https://github.com/facebook/create-react-app).
+Try this application [here](https://siasky.net/AABwbxyWA6uurmJon2dObtz5s7tJQjptf0jasYuUWL1bJg/#/).
 
-See the video demo [here](https://github.com/facebook/create-react-app).
+See the video demo [here](https://siasky.net/AADx-E8trQV5TfdfRpC9sn3pEFCueauA9RsUpz0yLsZejg).
 
 # Quick Start
 

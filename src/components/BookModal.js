@@ -108,7 +108,7 @@ const BookModal = ({ bookData, onClose }) => {
               </div>
             </Scrollbars>
             <div className="absolute z-10 bottom-0 left-0 right-0">
-              {isBookInLibrary(book.id) > -1 ? (
+              {isBookInLibrary(book.id) > -1 && userId ? (
                 <button
                   className="w-full bg-dark-primary-100 p-2 flex justify-center hover:bg-dark-primary-300"
                   onClick={() => setShowModal('addToLibrary')}

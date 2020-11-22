@@ -15,7 +15,7 @@ Easily share your reading profile with the world, embed your Skybook profile to 
 
 Try this application [here](https://siasky.net/AABwbxyWA6uurmJon2dObtz5s7tJQjptf0jasYuUWL1bJg/#/).
 
-See the video demo [here](https://siasky.net/AADx-E8trQV5TfdfRpC9sn3pEFCueauA9RsUpz0yLsZejg).
+See the video demo [here](https://siasky.net/AADx-E8trQV5TfdfRpC9sn3pEFCueauA9RsUpz0yLsZejg) and the scanbarcode demo [here](https://siasky.net/AABmG7pBZiXYeldfeA_gSmkBtbu7-W5UT8LyQbCB4n0RMA)
 
 # Quick Start
 
